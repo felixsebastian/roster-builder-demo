@@ -18,7 +18,7 @@ export default ({
   setLocation,
   setDate,
   pattern,
-  setPattern,
+  changePattern,
   patternLength,
   setPatternLength,
   create,
@@ -48,7 +48,7 @@ export default ({
     <Pattern
       {...{
         pattern,
-        setPattern,
+        changePattern,
         patternLength,
         setPatternLength
       }}

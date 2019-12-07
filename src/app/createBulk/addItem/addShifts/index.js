@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import Form from "./form";
 import moment from "moment";
+import patterns from "../../config/patterns";
 
 export default ({ addShift }) => {
   const [role, setRole] = useState(0);
@@ -10,8 +11,8 @@ export default ({ addShift }) => {
   const [date, setDate] = useState(moment());
   const [startTime, setStartTime] = useState({ hours: 9, minutes: "00" });
   const [endTime, setEndTime] = useState({ hours: 17, minutes: "00" });
-  const [pattern, setPattern] = useState(0);
-  const [patternLength, setPatternLength] = useState(1);
+  const [pattern, setPattern] = useState(patterns.data.none.id);
+  const [patternLength, setPatternLength] = useState(0);
 
   const error = error => {
     alert(error);
@@ -23,26 +24,30 @@ export default ({ addShift }) => {
     return true;
   };
 
+  const changePattern = pattern => {
+    setPattern(pattern);
+    if (pattern === patterns.data.none.id) setPatternLength(0);
+    if (pattern === patterns.data.daily.id) setPatternLength(1);
+    if (pattern === patterns.data.weekly.id) setPatternLength(1);
+  };
+
   const create = () => {
-    if (!validate()) {
-      return;
-    } else if (pattern === 0) {
-      addShift({ role, location, staffMember, date, startTime, endTime });
-    } else {
-      let nextDate = date;
+    if (!validate()) return;
+    let nextDate = date;
 
-      for (let i = 0; i < patternLength; i++) {
-        addShift({
-          role,
-          location,
-          staffMember,
-          date: nextDate.clone(),
-          startTime,
-          endTime
-        });
+    for (let i = 0; i < patternLength + 1; i++) {
+      addShift({
+        role,
+        location,
+        staffMember,
+        date: nextDate.clone(),
+        startTime,
+        endTime,
+        pattern,
+        patternLength
+      });
 
-        date.add(1, pattern === 1 ? "days" : "weeks");
-      }
+      nextDate.add(1, pattern === patterns.data.daily.id ? "days" : "weeks");
     }
   };
 
@@ -62,7 +67,7 @@ export default ({ addShift }) => {
         endTime,
         setEndTime,
         pattern,
-        setPattern,
+        changePattern,
         patternLength,
         setPatternLength,
         validate,

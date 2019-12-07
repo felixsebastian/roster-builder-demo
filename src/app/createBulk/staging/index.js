@@ -4,20 +4,8 @@ import Notes from "./notes";
 import React from "react";
 import Shifts from "./shifts";
 import Space from "../../ui/space";
+import addItems from "./addItems";
 import locations from "../config/locations";
-
-const itemsForDate = date => ({
-  shifts: [],
-  notes: [],
-  date
-});
-
-const addItems = (type, items, itemsByDate) =>
-  items.forEach((item, i) => {
-    let date = item.date.format("DD/MM/YYYY");
-    if (!itemsByDate[date]) itemsByDate[date] = itemsForDate(item.date);
-    itemsByDate[date][type].push({ ...item, id: type.toUpperCase() + "_" + i });
-  });
 
 const getItemsByDate = (shifts, notes) => {
   let itemsByDate = {};
@@ -28,13 +16,14 @@ const getItemsByDate = (shifts, notes) => {
 
 export default ({ shifts, notes, select, selection }) => {
   let itemsByDate = getItemsByDate(shifts, notes);
+  let dates = Object.keys(itemsByDate).sort((dateA, dateB) => dateA > dateB);
 
   return (
     <Box>
-      <Headers itemsByDate={itemsByDate} />
-      <Shifts {...{ itemsByDate, select, selection }} />
+      <Headers itemsByDate={itemsByDate} dateKeys={dates} />
+      <Shifts {...{ itemsByDate, select, selection, dates }} />
       <Space size={2} />
-      <Notes {...{ itemsByDate, select, selection }} />
+      <Notes {...{ itemsByDate, select, selection, dates }} />
     </Box>
   );
 };

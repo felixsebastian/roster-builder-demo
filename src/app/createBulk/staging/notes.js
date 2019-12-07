@@ -8,12 +8,12 @@ import roles from "../config/roles";
 
 const getNoteOrderKey = note => (note.role === null ? Infinity : note.role);
 
-export default ({ itemsByDate, select, selection }) => (
+export default ({ itemsByDate, select, selection, dates }) => (
   <Row>
-    {Object.values(itemsByDate).map((itemsForDate, i) => (
+    {dates.map((date, i) => (
       <Fragment key={i}>
         <Column>
-          {itemsForDate.notes
+          {itemsByDate[date].notes
             .sort(
               (noteA, noteB) => getNoteOrderKey(noteA) > getNoteOrderKey(noteB)
             )

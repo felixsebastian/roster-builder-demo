@@ -1,7 +1,8 @@
 import React from "react";
 import Space from "../../../ui/space";
-import styled from "styled-components";
 import input from "../../../ui/input";
+import patterns from "../../config/patterns";
+import styled from "styled-components";
 
 const Input = styled(input)`
   width: 4rem;
@@ -21,7 +22,7 @@ export default ({ pattern, patternLength, setPatternLength }) => (
       min="1"
     />
     <Space vertical inline />
-    {pattern === 1 ? `day` : `week`}
+    {pattern === patterns.data.daily.id ? `day` : `week`}
     {patternLength > 1 ? "s" : ""}
   </>
 );

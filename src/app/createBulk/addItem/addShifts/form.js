@@ -25,7 +25,7 @@ export default ({
   endTime,
   setEndTime,
   pattern,
-  setPattern,
+  changePattern,
   patternLength,
   setPatternLength,
   create
@@ -62,7 +62,7 @@ export default ({
     <Pattern
       {...{
         pattern,
-        setPattern,
+        changePattern,
         patternLength,
         setPatternLength
       }}

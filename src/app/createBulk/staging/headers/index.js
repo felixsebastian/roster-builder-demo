@@ -16,13 +16,13 @@ const Date = styled(({ children, className }) => (
   align-items: flex-start;
 `;
 
-export default ({ itemsByDate }) => {
+export default ({ itemsByDate, dateKeys }) => {
   let currentMonth = null;
-  let currentYear = null;
 
   return (
     <Row>
-      {Object.values(itemsByDate).map(({ date }, i) => {
+      {dateKeys.map((dateKey, i) => {
+        let date = itemsByDate[dateKey].date;
         let month = date.format("MMMM YYYY");
 
         return (

@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Box = styled.div`
   border: 1px solid #e8e6df;
   background-color: #fafafa;
-  ${({ selected }) => Boolean(selected) && "box-shadow: 0 0 0 0.25rem #75a1ff"}
+  ${({ selected }) => Boolean(selected) && "box-shadow: 0 0 0 0.25rem #8AAFFF"}
   border-radius: 0.25rem;
   line-height: 1.67;
   padding: 2px 0.5rem;
