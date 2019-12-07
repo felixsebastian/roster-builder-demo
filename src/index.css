@@ -11,4 +11,6 @@ input,
 select {
   font-family: "Roboto", sans-serif;
   color: #2f313a;
+  background-color: transparent;
+  line-height: normal;
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Space from "./space";
+import input from "../ui/input";
+import Button from "../ui/button";
 
 const Box = styled.div`
   display: flex;
@@ -9,49 +11,30 @@ const Box = styled.div`
   align-items: center;
 `;
 
-const Input = styled.input`
+const Input = styled(input)`
   display: block;
-  padding: 0.5rem;
-  width: 2rem;
+  width: 2.5rem;
+  box-sizing: border-box;
 `;
 
-const AmPm = styled.button`
+const AmPm = styled(({ children }) => <Button grey>{children}</Button>)`
   display: block;
-  padding: 0.5rem;
+  padding: 0.5rem 0rem;
+  width: 3rem;
 `;
 
 export default ({ value, onChange }) => {
-  const setHours = e => {
-    let hours = e.target.value;
-    let lastDigit = parseInt(hours.charAt(hours.length - 1), 10);
-    if (lastDigit === 0) lastDigit = 1;
-    hours = parseInt(hours, 10);
-    if (value.hours > 12) hours += 12;
-    if (hours.length === 3 || hours < 0 || hours > 25) hours = lastDigit;
-    if (hours === 0) hours = 24;
-    if (hours === 25) hours = 1;
-
+  const setHours = e =>
     onChange({
-      hours,
+      hours: e.target.value,
       minutes: value.minutes
     });
-  };
 
-  const setMinutes = e => {
-    let minutes = e.target.value;
-    let lastDigit = parseInt(minutes.charAt(minutes.length - 1), 10);
-    minutes = parseInt(minutes, 10);
-    if (minutes.length === 3 || minutes < 0 || minutes > 60)
-      minutes = lastDigit;
-    if (minutes === -1) minutes = 59;
-    if (minutes === 60) minutes = 1;
-
-    if (minutes > 0 && minutes < 60)
-      onChange({
-        hours: value.hours,
-        minutes
-      });
-  };
+  const setMinutes = e =>
+    onChange({
+      hours: value.hours,
+      minutes: e.target.value
+    });
 
   const toggleAmPm = () =>
     onChange({
@@ -70,14 +53,9 @@ export default ({ value, onChange }) => {
       <Space vertical size={0.25} />
       :
       <Space vertical size={0.25} />
-      <Input
-        onChange={setMinutes}
-        type="text"
-        size="3"
-        value={String(value.minutes).padStart(2, "0")}
-      />
+      <Input onChange={setMinutes} type="text" size="3" value={value.minutes} />
       <Space vertical size={0.25} />
-      <AmPm onClick={toggleAmPm}>{value.hours > 12 ? "Pm" : "Am"}</AmPm>
+      <AmPm onClick={toggleAmPm}>{value.hours > 12 ? "pm" : "am"}</AmPm>
       <Space vertical size={2} />
     </Box>
   );

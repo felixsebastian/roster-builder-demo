@@ -18,6 +18,6 @@ const Title = styled.span`
 
 export default () => (
   <Box>
-    Ento <Title>Roster Plan Prototype</Title>
+    Ento <Title>Roster Planner Prototype</Title>
   </Box>
 );

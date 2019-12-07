@@ -22,6 +22,8 @@ const MainBox = styled.div`
   height: 100%;
   box-sizing: border-box;
   padding: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export default ({ sidebar: Sidebar, main: Main }) => {

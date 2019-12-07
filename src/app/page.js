@@ -10,6 +10,7 @@ const Box = styled.div`
 
 const View = styled.div`
   flex-grow: 1;
+  overflow: hidden;
 `;
 
 export default props => (

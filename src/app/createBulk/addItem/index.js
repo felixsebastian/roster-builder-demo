@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Tabs from "../../ui/tabs";
-import AddShifts from "./addShifts";
+
 import AddNotes from "./addNotes";
+import AddShifts from "./addShifts";
+import Tabs from "../../ui/tabs";
 import styled from "styled-components";
 
 const tabs = [
@@ -24,13 +25,13 @@ const Box = styled.div`
 `;
 
 export default ({ addShift, addNote }) => {
-  const [activeItem, setActiveItem] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <Box>
-      <Tabs activeItem={activeItem} items={tabs} onTabChange={setActiveItem} />
-      {activeItem === 0 && <AddShifts addShift={addShift} />}
-      {activeItem === 1 && <AddNotes addNote={addNote} />}
+      <Tabs activeItem={activeTab} items={tabs} onTabChange={setActiveTab} />
+      {activeTab === 0 && <AddShifts addShift={addShift} />}
+      {activeTab === 1 && <AddNotes addNote={addNote} />}
     </Box>
   );
 };
