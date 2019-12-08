@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 export const horizontalSpace = styled.div`
+  flex-shrink: 0;
   flex-basis: ${({ size }) => size}rem;
   height: ${props => props.size}rem;
 `;
 
 export const verticalSpace = styled.div`
+  flex-shrink: 0;
   flex-basis: ${({ size }) => size}rem;
   width: ${({ size }) => size}rem;
   display: ${({ inline }) => (inline ? "inline-block" : "block")};

@@ -6,5 +6,5 @@ export default styled.span`
   font-weight: ${props => props.weight || 400};
   text-decoration: ${props => props.decoration || "none"};
   line-height: ${props => props.lineHeight || 1};
-  text-align: ${props => props.align || "left"};
+  text-align: ${props => (props.center ? "center" : props.align || "left")};
 `;

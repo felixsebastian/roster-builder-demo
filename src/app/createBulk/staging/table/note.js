@@ -1,6 +1,5 @@
 import React from "react";
-import Space from "../../ui/space";
-import Type from "../../ui/type";
+import Type from "../../../ui/type";
 import styled from "styled-components";
 
 const Box = styled.div`
@@ -21,7 +20,7 @@ export default ({ body, role, onClick, selected }) => (
     <Type size={0.6}>
       Note for {(role === "Everyone" ? role : role + "s").toLowerCase()}
     </Type>
-    <Space size={0.5} />
+    <br />
     <Type size={0.75}>{body}</Type>
   </Box>
 );

@@ -1,82 +1,93 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Box from "./box";
-import Table from "./table";
-import Headers from "./headers";
-import Months from "./months";
-import Notes from "./notes";
-import Shifts from "./shifts";
-import Space from "../../ui/space";
-import Hr from "../../ui/hr";
+import SideScroll from "./sideScroll";
 import addItems from "./addItems";
-import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Continuity from "./continuity";
+import Arrow from "./arrow";
+import Table from "./table";
+import Space from "../../ui/space";
+import Type from "../../ui/type";
+import Toolbar from "./toolbar";
+import Box from "./box";
 
-const getItemsByDate = (shifts, notes) => {
+const getItemsByDate = (shifts, notes, location) => {
   let itemsByDate = {};
-  addItems("shifts", shifts, itemsByDate);
-  addItems("notes", notes, itemsByDate);
+  addItems("shifts", shifts, itemsByDate, location);
+  addItems("notes", notes, itemsByDate, location);
   return itemsByDate;
 };
 
-const Arrow = styled.button`
-  padding: 1rem;
-  cursor: pointer;
-  border: none;
-  height: 7.25rem;
-  &:hover {
-    background-color: #ddd;
-  }
-  &:disabled {
-    background-color: #eee;
-    color: #ddd;
-    cursor: default;
-  }
-`;
-
 const getPageSize = () =>
-  Math.max(document.documentElement.clientWidth, window.innerWidth || 0) / 180 -
-  2.4;
+  Math.floor(
+    Math.max(document.documentElement.clientWidth, window.innerWidth || 0) /
+      180 -
+      2.4
+  );
 
-export default ({ shifts, notes, select, selection }) => {
+export default ({
+  shifts,
+  notes,
+  select,
+  selection,
+  deleteSelection,
+  publish
+}) => {
   const [page, setPage] = useState(0);
-  let itemsByDate = getItemsByDate(shifts, notes);
+  const [location, setLocation] = useState(null);
   let [pageSize, setPageSize] = useState(getPageSize());
+  let itemsByDate = getItemsByDate(shifts, notes, location);
 
-  const handleResize = useCallback(() => setPageSize(getPageSize()), []);
+  const handleResize = useCallback(() => {
+    setPageSize(getPageSize());
+    setPage(0);
+  }, []);
+
+  const changeLocation = useCallback(location => {
+    setLocation(location);
+    setPage(0);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
 
-  let dates = Object.keys(itemsByDate)
+  const dates = Object.keys(itemsByDate)
     .map(date => parseInt(date, 10))
-    .sort((dateA, dateB) => dateA > dateB);
-  dates = dates.slice(page, page + pageSize);
+    .sort((dateA, dateB) => dateA > dateB)
+    .slice(page, page + pageSize);
 
   return (
     <Box>
-      <Arrow disabled={page === 0} onClick={() => setPage(page - pageSize)}>
-        <FontAwesomeIcon icon="caret-left" />
-      </Arrow>
-      <Table>
-        <Headers itemsByDate={itemsByDate} dateKeys={dates} />
-        <Space size={0.25} />
-        <Continuity dates={dates} />
-        <Space size={0.5} />
-        <Months itemsByDate={itemsByDate} dateKeys={dates} />
-        <Space size={0.5} />
-        <Shifts {...{ itemsByDate, select, selection, dates }} />
-        <Space size={1.5} />
-        <Notes {...{ itemsByDate, select, selection, dates }} />
-      </Table>
-      <Arrow
-        disabled={page > dates.length - 1 / pageSize}
-        onClick={() => setPage(page + pageSize)}
-      >
-        <FontAwesomeIcon icon="caret-right" />
-      </Arrow>
+      {dates.length ? (
+        <SideScroll>
+          <Space size={0.5} />
+          <Arrow disabled={page === 0} onClick={() => setPage(page - pageSize)}>
+            <FontAwesomeIcon icon="caret-left" />
+          </Arrow>
+          <Table {...{ itemsByDate, dates, select, selection }} />
+          <Arrow
+            disabled={page >= Object.keys(itemsByDate).length - pageSize}
+            onClick={() => setPage(page + pageSize)}
+          >
+            <FontAwesomeIcon icon="caret-right" />
+          </Arrow>
+        </SideScroll>
+      ) : (
+        <>
+          <Space />
+          <Type block center>
+            Nothing to see here...
+          </Type>
+        </>
+      )}
+      <Space />
+      <Toolbar
+        changeLocation={changeLocation}
+        selection={selection}
+        deleteSelection={deleteSelection}
+        publish={publish}
+      />
+      <Space />
     </Box>
   );
 };

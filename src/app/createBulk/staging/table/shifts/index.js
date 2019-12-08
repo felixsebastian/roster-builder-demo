@@ -1,15 +1,17 @@
 import React, { Fragment } from "react";
 import Row from "../row";
 import Shift from "./shift";
-import Space from "../../../ui/space";
+import Space from "../../../../ui/space";
 import formatTimeframe from "./formatTimeframe";
-import roles from "../../config/roles";
+import roles from "../../../config/roles";
 
 const getTimeframe = (startTime, endTime) =>
   `${formatTimeframe(startTime)} - ${formatTimeframe(endTime)}`;
 
 const getShiftOrderKey = shift =>
-  shift.role + shift.startTime.hours + shift.startTime.minutes;
+  (shift.startTime.hours + "0").padStart(3, "0") +
+  (shift.startTime.minutes + "0").padStart(3, "0") +
+  (shift.role + "0").padStart(5, "0");
 
 export default ({ itemsByDate, dates, selection, select }) => (
   <Row
@@ -17,10 +19,8 @@ export default ({ itemsByDate, dates, selection, select }) => (
     dateKeys={dates}
     cell={({ itemsForDate }) =>
       itemsForDate.shifts
-        .sort(
-          (shiftA, shiftB) =>
-            getShiftOrderKey(shiftA) > getShiftOrderKey(shiftB)
-        )
+        .map(item => item)
+        .sort((a, b) => getShiftOrderKey(a) - getShiftOrderKey(b))
         .map((shift, i) => (
           <Fragment key={i}>
             <Shift

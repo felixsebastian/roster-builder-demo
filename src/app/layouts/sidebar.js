@@ -9,7 +9,7 @@ const Box = styled.div`
   background-color: #eeeeee;
 `;
 
-const SidebarBox = styled.div`
+const Sidebar = styled.div`
   width: 20rem;
   height: 100%;
   padding: 2rem;
@@ -17,25 +17,20 @@ const SidebarBox = styled.div`
   background-color: #fafafa;
 `;
 
-const MainBox = styled.div`
+const Main = styled.div`
   flex-grow: 1;
   height: 100%;
   box-sizing: border-box;
   flex-basis: 0;
-  padding: 2rem;
   overflow-y: auto;
   overflow-x: hidden;
 `;
 
-export default ({ sidebar: Sidebar, main: Main }) => {
+export default ({ sidebar, main }) => {
   return (
     <Box>
-      <SidebarBox>
-        <Sidebar />
-      </SidebarBox>
-      <MainBox>
-        <Main />
-      </MainBox>
+      <Sidebar>{React.cloneElement(sidebar)}</Sidebar>
+      <Main>{React.cloneElement(main)}</Main>
     </Box>
   );
 };

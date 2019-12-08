@@ -1,8 +1,8 @@
 import React from "react";
 import Row from "./row/box";
 import Column from "./column";
-import Type from "../../ui/type";
-import Space from "../../ui/space";
+import Type from "../../../ui/type";
+import Space from "../../../ui/space";
 
 export default ({ itemsByDate, dateKeys: dates }) => {
   let currentMonth = null;
@@ -10,7 +10,7 @@ export default ({ itemsByDate, dateKeys: dates }) => {
   return (
     <Row>
       <Space vertical size={0.5} />
-      {dates.map(date => {
+      {dates.map((date, i) => {
         let month = itemsByDate[date].date.format("MMMM YYYY");
 
         const getShowMonth = () => {
@@ -20,8 +20,8 @@ export default ({ itemsByDate, dateKeys: dates }) => {
         };
 
         return (
-          <Column>
-            {getShowMonth() && <Type size={1.5}>{month}</Type>}
+          <Column key={i}>
+            {getShowMonth() && <Type size={0.75}>{month}</Type>}
             <Space vertical size={0.5} />
           </Column>
         );

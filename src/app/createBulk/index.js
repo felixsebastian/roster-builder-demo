@@ -11,26 +11,33 @@ const getRandomId = () =>
     .toString(36)
     .substr(2, 9);
 
-export default () => {
+export default ({ publish }) => {
   const [shifts, setShifts] = useState(dummyShifts);
   const [notes, setNotes] = useState(dummyNotes);
   const [selection, setSelection] = useState(null);
-  const select = item => setSelection(item);
+
+  const select = item => {
+    setSelection(item);
+  };
+
+  const deleteSelection = useCallback(() => {
+    setShifts([...shifts.filter(shift => shift.id !== selection)]);
+    setNotes([...notes.filter(note => note.id !== selection)]);
+    setSelection(null);
+  }, [shifts, notes, selection]);
 
   const keyDown = useCallback(
     e => {
       if (
+        selection !== null &&
         (e.code === "Delete" ||
           e.code === "Backspace" ||
           e.key === "Delete" ||
-          e.key === "Backspace") &&
-        selection !== null
-      ) {
-        setShifts([...shifts.filter(shift => shift.id !== selection)]);
-        setNotes([...notes.filter(note => note.id !== selection)]);
-      }
+          e.key === "Backspace")
+      )
+        deleteSelection();
     },
-    [selection, shifts, notes]
+    [deleteSelection, selection]
   );
 
   useEffect(() => {
@@ -55,8 +62,12 @@ export default () => {
 
   return (
     <Sidebar
-      sidebar={() => <AddItem {...{ addShift, addNote }} />}
-      main={() => <Staging {...{ shifts, notes, selection, select }} />}
+      sidebar={<AddItem {...{ addShift, addNote }} />}
+      main={
+        <Staging
+          {...{ shifts, notes, selection, select, deleteSelection, publish }}
+        />
+      }
     />
   );
 };

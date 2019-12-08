@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 
 import Box from "./box";
 import Column from "../column";
-import Space from "../../../ui/space";
+import Space from "../../../../ui/space";
 
 export default ({ itemsByDate, dateKeys, cell: Cell }) => {
   let lastDateKey = null;

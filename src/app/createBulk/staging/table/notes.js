@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import Note from "./note";
 import Row from "./row";
-import Space from "../../ui/space";
-import roles from "../config/roles";
+import Space from "../../../ui/space";
+import roles from "../../config/roles";
 
 const getNoteOrderKey = note => (note.role === null ? Infinity : note.role);
 

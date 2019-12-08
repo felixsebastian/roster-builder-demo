@@ -40,14 +40,16 @@ export default ({ addShift }) => {
         role,
         location,
         staffMember,
-        date: nextDate.clone(),
+        date: nextDate,
         startTime,
         endTime,
         pattern,
         patternLength
       });
 
-      nextDate.add(1, pattern === patterns.data.daily.id ? "days" : "weeks");
+      nextDate
+        .clone()
+        .add(1, pattern === patterns.data.daily.id ? "days" : "weeks");
     }
   };
 
