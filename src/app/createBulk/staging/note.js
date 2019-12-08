@@ -16,10 +16,10 @@ const Box = styled.div`
   cursor: pointer;
 `;
 
-export default ({ id, body, role, onClick, selected }) => (
-  <Box selected={selected} onClick={() => onClick(id)}>
+export default ({ body, role, onClick, selected }) => (
+  <Box selected={selected} onClick={onClick}>
     <Type size={0.6}>
-      For: {(role === "Everyone" ? role : role + "s").toLowerCase()}
+      Note for {(role === "Everyone" ? role : role + "s").toLowerCase()}
     </Type>
     <Space size={0.5} />
     <Type size={0.75}>{body}</Type>

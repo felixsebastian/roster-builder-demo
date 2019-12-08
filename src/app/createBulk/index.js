@@ -6,6 +6,11 @@ import Staging from "./staging";
 import dummyNotes from "./config/dummyNotes";
 import dummyShifts from "./config/dummyShifts";
 
+const getRandomId = () =>
+  Math.random()
+    .toString(36)
+    .substr(2, 9);
+
 export default () => {
   const [shifts, setShifts] = useState(dummyShifts);
   const [notes, setNotes] = useState(dummyNotes);
@@ -14,13 +19,18 @@ export default () => {
 
   const keyDown = useCallback(
     e => {
-      if (e.code === "Delete" && selection !== null)
-        setShifts([
-          ...shifts.slice(0, selection),
-          ...shifts.slice(selection + 1)
-        ]);
+      if (
+        (e.code === "Delete" ||
+          e.code === "Backspace" ||
+          e.key === "Delete" ||
+          e.key === "Backspace") &&
+        selection !== null
+      ) {
+        setShifts([...shifts.filter(shift => shift.id !== selection)]);
+        setNotes([...notes.filter(note => note.id !== selection)]);
+      }
     },
-    [selection, shifts]
+    [selection, shifts, notes]
   );
 
   useEffect(() => {
@@ -28,10 +38,19 @@ export default () => {
     return () => window.removeEventListener("keydown", keyDown);
   });
 
-  const addNote = useCallback(note => setNotes(notes => [...notes, note]), []);
+  const addNote = useCallback(
+    note => setNotes(notes => [...notes, { ...note, id: getRandomId() }]),
+    []
+  );
 
   const addShift = useCallback(shift => {
-    setShifts(shifts => [...shifts, shift]);
+    setShifts(shifts => [
+      ...shifts,
+      {
+        ...shift,
+        id: getRandomId()
+      }
+    ]);
   }, []);
 
   return (

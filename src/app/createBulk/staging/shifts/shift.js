@@ -19,8 +19,8 @@ const Timeframe = styled.span`
   font-weight: 500;
 `;
 
-export default ({ id, timeframe, role, onClick, selected }) => (
-  <Box selected={selected} onClick={() => onClick(id)}>
+export default ({ timeframe, role, onClick, selected }) => (
+  <Box selected={selected} onClick={onClick}>
     <Timeframe>{timeframe}</Timeframe>
     <br />
     {role}

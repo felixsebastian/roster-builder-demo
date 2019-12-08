@@ -4,6 +4,7 @@ import textArea from "../../../ui/textArea";
 
 const Input = styled(textArea)`
   width: 100%;
+  box-sizing: border-box;
 `;
 
 export default ({ value, onChange, className }) => (

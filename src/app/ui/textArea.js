@@ -5,4 +5,6 @@ export default styled.textarea`
   border-radius: 0.25rem;
   background-color: #eeeeee;
   border: none;
+  resize: vertical;
+  height: 6rem;
 `;

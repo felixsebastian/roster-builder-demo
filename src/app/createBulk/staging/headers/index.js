@@ -1,4 +1,3 @@
-import Column from "../column";
 import React from "react";
 import Row from "../row";
 import Space from "../../../ui/space";
@@ -16,29 +15,22 @@ const Date = styled(({ children, className }) => (
   align-items: flex-start;
 `;
 
-export default ({ itemsByDate, dateKeys }) => {
-  let currentMonth = null;
+const cell = ({ itemsForDate }) => {
+  let date = itemsForDate.date;
+  let weekend = date.day() % 6 === 0;
 
   return (
-    <Row>
-      {dateKeys.map((dateKey, i) => {
-        let date = itemsByDate[dateKey].date;
-        let month = date.format("MMMM YYYY");
-
-        return (
-          <Column key={i}>
-            <Date>
-              {date.date()}
-              <Type size={1}>{getOrdinal(date.date())}</Type>
-            </Date>
-            <Space size={0.5} />
-            {month !== currentMonth && (currentMonth = month) && (
-              <Type size={1.5}>{month}</Type>
-            )}
-            <Space />
-          </Column>
-        );
-      })}
-    </Row>
+    <>
+      <Type size={1}>{date.format("dddd")}</Type>
+      <Space size={0.5} />
+      <Date weekend={weekend}>
+        {date.date()}
+        <Type size={1}>{getOrdinal(date.date())}</Type>
+      </Date>
+    </>
   );
+};
+
+export default ({ itemsByDate, dateKeys }) => {
+  return <Row {...{ itemsByDate, dateKeys, cell }} />;
 };

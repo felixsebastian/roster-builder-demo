@@ -21,11 +21,11 @@ const MainBox = styled.div`
   flex-grow: 1;
   height: 100%;
   box-sizing: border-box;
+  flex-basis: 0;
   padding: 2rem;
   overflow-y: auto;
   overflow-x: hidden;
 `;
-
 export default ({ sidebar: Sidebar, main: Main }) => {
   return (
     <Box>
