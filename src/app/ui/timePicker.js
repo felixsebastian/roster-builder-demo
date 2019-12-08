@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import Space from "./space";
 import input from "../ui/input";
@@ -19,8 +19,8 @@ const Input = styled(input)`
   padding-right: 0;
 `;
 
-const AmPm = styled(({ children, className }) => (
-  <Button className={className} grey>
+const AmPm = styled(({ children, className, onClick }) => (
+  <Button {...{ className, onClick }} grey>
     {children}
   </Button>
 ))`
@@ -36,17 +36,26 @@ const Colon = styled.div`
 `;
 
 export default ({ value, onChange }) => {
-  const setHours = e =>
+  const minutes = useRef(null);
+
+  const handleHoursInput = e => {
+    if (!/^([1-9]|[01]\d|2[0-3])?$/.test(e.target.value)) return;
+    if (/^(1[012]|2[0-3]|[3-9])$/.test(e.target.value)) minutes.current.focus();
+
     onChange({
-      hours: e.target.value,
+      hours: parseInt(e.target.value) || "",
       minutes: value.minutes
     });
+  };
 
-  const setMinutes = e =>
+  const handleMinutesInput = e => {
+    if (!/^([0-5]?\d)?$/.test(e.target.value)) return;
+
     onChange({
       hours: value.hours,
       minutes: e.target.value
     });
+  };
 
   const toggleAmPm = () =>
     onChange({
@@ -54,10 +63,30 @@ export default ({ value, onChange }) => {
       minutes: value.minutes
     });
 
+  const handleHoursBlur = e => {
+    if (e.target.value.length === 0)
+      e.target.value = e.target.dataset.lastValue;
+  };
+
+  const handleMinutesBlur = e => {
+    if (e.target.value.length === 0) e.target.value = "00";
+    if (e.target.value.length === 1) e.target.value = "0" + e.target.value;
+  };
+
+  const handleFocus = e => {
+    e.target.select();
+    e.target.dataset.lastValue = e.target.value;
+  };
+
+  const handleDrag = e => e.preventDefault();
+
   return (
     <Box>
       <Input
-        onChange={setHours}
+        onDragStart={handleDrag}
+        onBlur={handleHoursBlur}
+        onFocus={handleFocus}
+        onChange={handleHoursInput}
         type="text"
         size="3"
         value={((value.hours - 1) % 12) + 1}
@@ -65,7 +94,16 @@ export default ({ value, onChange }) => {
       <Space vertical size={0.25} />
       <Colon>:</Colon>
       <Space vertical size={0.25} />
-      <Input onChange={setMinutes} type="text" size="3" value={value.minutes} />
+      <Input
+        onDragStart={handleDrag}
+        onBlur={handleMinutesBlur}
+        onFocus={handleFocus}
+        ref={minutes}
+        onChange={handleMinutesInput}
+        type="text"
+        size="3"
+        value={value.minutes}
+      />
       <AmPm onClick={toggleAmPm}>{value.hours > 12 ? "pm" : "am"}</AmPm>
     </Box>
   );
