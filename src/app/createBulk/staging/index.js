@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Box from "./box";
 import Table from "./table";
 import Headers from "./headers";
@@ -34,17 +34,30 @@ const Arrow = styled.button`
   }
 `;
 
+const getPageSize = () =>
+  Math.max(document.documentElement.clientWidth, window.innerWidth || 0) / 180 -
+  2.4;
+
 export default ({ shifts, notes, select, selection }) => {
   const [page, setPage] = useState(0);
   let itemsByDate = getItemsByDate(shifts, notes);
+  let [pageSize, setPageSize] = useState(getPageSize());
+
+  const handleResize = useCallback(() => setPageSize(getPageSize()), []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [handleResize]);
+
   let dates = Object.keys(itemsByDate)
     .map(date => parseInt(date, 10))
     .sort((dateA, dateB) => dateA > dateB);
-  dates = dates.slice(page, page + 7);
+  dates = dates.slice(page, page + pageSize);
 
   return (
     <Box>
-      <Arrow disabled={page === 0} onClick={() => setPage(page - 7)}>
+      <Arrow disabled={page === 0} onClick={() => setPage(page - pageSize)}>
         <FontAwesomeIcon icon="caret-left" />
       </Arrow>
       <Table>
@@ -59,8 +72,8 @@ export default ({ shifts, notes, select, selection }) => {
         <Notes {...{ itemsByDate, select, selection, dates }} />
       </Table>
       <Arrow
-        disabled={page > dates.length - 1 / 7}
-        onClick={() => setPage(page + 7)}
+        disabled={page > dates.length - 1 / pageSize}
+        onClick={() => setPage(page + pageSize)}
       >
         <FontAwesomeIcon icon="caret-right" />
       </Arrow>

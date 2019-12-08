@@ -10,7 +10,7 @@ const Box = styled.div`
 `;
 
 const SidebarBox = styled.div`
-  width: 25rem;
+  width: 20rem;
   height: 100%;
   padding: 2rem;
   box-sizing: border-box;

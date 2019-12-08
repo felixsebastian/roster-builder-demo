@@ -13,14 +13,26 @@ const Box = styled.div`
 
 const Input = styled(input)`
   display: block;
-  width: 2.5rem;
+  width: 2rem;
   box-sizing: border-box;
+  border-radius: 0.25rem 0 0 0.25rem;
+  padding-right: 0;
 `;
 
-const AmPm = styled(({ children }) => <Button grey>{children}</Button>)`
+const AmPm = styled(({ children, className }) => (
+  <Button className={className} grey>
+    {children}
+  </Button>
+))`
   display: block;
   padding: 0.5rem 0rem;
-  width: 3rem;
+  width: 2.5rem;
+  border-radius: 0 0.25rem 0.25rem 0;
+`;
+
+const Colon = styled.div`
+  display: inline-block;
+  width: 0.25rem;
 `;
 
 export default ({ value, onChange }) => {
@@ -51,12 +63,10 @@ export default ({ value, onChange }) => {
         value={((value.hours - 1) % 12) + 1}
       />
       <Space vertical size={0.25} />
-      :
+      <Colon>:</Colon>
       <Space vertical size={0.25} />
       <Input onChange={setMinutes} type="text" size="3" value={value.minutes} />
-      <Space vertical size={0.25} />
       <AmPm onClick={toggleAmPm}>{value.hours > 12 ? "pm" : "am"}</AmPm>
-      <Space vertical size={2} />
     </Box>
   );
 };
