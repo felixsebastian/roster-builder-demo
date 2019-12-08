@@ -6,5 +6,5 @@ export default styled.textarea`
   background-color: #eeeeee;
   border: none;
   resize: vertical;
-  height: 6rem;
+  height: 4em;
 `;

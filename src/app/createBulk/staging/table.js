@@ -2,5 +2,7 @@ import styled from "styled-components";
 
 export default styled.div`
   flex-grow: 1;
-  flex-basis: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `;

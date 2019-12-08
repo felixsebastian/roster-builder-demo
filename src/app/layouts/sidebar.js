@@ -26,6 +26,7 @@ const MainBox = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
 `;
+
 export default ({ sidebar: Sidebar, main: Main }) => {
   return (
     <Box>

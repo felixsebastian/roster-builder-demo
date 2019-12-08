@@ -6,8 +6,7 @@ const Box = styled.header`
   line-height: 3.5rem;
   background-color: #496fc9;
   color: #dbe6ff;
-  padding-left: 1rem;
-  /* border-bottom: 1px solid #eeeeee; */
+  padding-left: 2rem;
   font-weight: 400;
   font-size: 1.3em;
 `;

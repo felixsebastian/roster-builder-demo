@@ -11,6 +11,7 @@ import TimePicker from "../../../ui/timePicker";
 import locations from "../../config/locations";
 import roles from "../../config/roles";
 import staffMembers from "../../config/staffMembers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default ({
   role,
@@ -67,6 +68,8 @@ export default ({
         setPatternLength
       }}
     />
-    <Submit onClick={create}>Add to roster plan ⟶</Submit>
+    <Submit onClick={create}>
+      Add to roster plan <FontAwesomeIcon icon="long-arrow-alt-right" />
+    </Submit>
   </Box>
 );
