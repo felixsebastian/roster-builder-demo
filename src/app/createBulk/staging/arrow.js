@@ -6,7 +6,7 @@ export default styled.button`
   border: none;
   height: 2rem;
   width: 2rem;
-  margin-top: 1.25rem;
+  margin-top: 2.25rem;
   border-radius: 0.25rem;
   background-color: #ddd;
   &:hover {

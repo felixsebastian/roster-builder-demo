@@ -8,6 +8,7 @@ import Space from "../../../ui/space";
 
 export default ({ itemsByDate, dates, select, selection }) => (
   <Box>
+    <Space />
     <Months itemsByDate={itemsByDate} dateKeys={dates} />
     <Space size={0.25} />
     <Headers {...{ itemsByDate, dates }} />

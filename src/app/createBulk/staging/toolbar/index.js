@@ -20,13 +20,6 @@ export default ({ changeLocation, selection, deleteSelection, publish }) => (
       }
     />
     <Space vertical inline />
-    {selection && (
-      <>
-        <Button color="#C95A49" disabled={!selection} onClick={deleteSelection}>
-          <FontAwesomeIcon icon="trash" />
-        </Button>
-      </>
-    )}
     <Spacer />
     <Button
       color="#496fc9"

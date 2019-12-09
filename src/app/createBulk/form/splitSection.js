@@ -1,6 +1,6 @@
 import React, { Children } from "react";
 import styled from "styled-components";
-import Space from "../../../ui/space";
+import Space from "../../ui/space";
 
 const Box = styled.div`
   display: flex;

@@ -1,7 +1,7 @@
 import FormBlock from "./block";
 import PatternLength from "./patternLength";
 import React from "react";
-import patterns from "../../config/patterns";
+import patterns from "../config/patterns";
 import select from "./select";
 import styled from "styled-components";
 

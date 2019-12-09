@@ -7,7 +7,7 @@ import disablePast from "./disablePast";
 
 const dateFormat = "Do MMMM YYYY";
 
-export default ({ onChange }) => (
+export default ({ onChange, initialDate = new Date() }) => (
   <DayPickerInput
     component={Input}
     dayPickerProps={disablePast}
@@ -15,7 +15,7 @@ export default ({ onChange }) => (
     parseDate={parseDate}
     format={dateFormat}
     placeholder={""}
-    value={moment().format(dateFormat)}
+    value={moment(initialDate).format(dateFormat)}
     onDayChange={date => onChange(moment(date))}
   />
 );

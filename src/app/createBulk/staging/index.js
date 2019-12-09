@@ -60,7 +60,6 @@ export default ({
     <Box>
       {dates.length ? (
         <SideScroll>
-          <Space size={0.5} />
           <Arrow disabled={page === 0} onClick={() => setPage(page - pageSize)}>
             <FontAwesomeIcon icon="caret-left" />
           </Arrow>

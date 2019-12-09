@@ -9,5 +9,6 @@ export default styled.button`
     props.disabled ? "#aaaaaa" : props.grey ? "#2f313a" : "#eeeeee"};
   cursor: pointer;
   font-size: 1rem;
+  width: ${props => (props.wide ? "100%" : "auto")}
   border-radius: 0.25rem;
 `;

@@ -14,3 +14,11 @@ select {
   background-color: transparent;
   line-height: normal;
 }
+
+.ento-toast {
+  border: 1px solid #496fc9;
+  background-color: #8aafff !important;
+  color: #2f313a !important;
+  border-radius: 0.25rem !important;
+  padding: 1rem !important;
+}

@@ -20,7 +20,7 @@ export default ({ addShift }) => {
   };
 
   const validate = () => {
-    if (!staffMember) return error("Please select a staff member!");
+    if (staffMember === null) return error("Please select a staff member!");
     return true;
   };
 

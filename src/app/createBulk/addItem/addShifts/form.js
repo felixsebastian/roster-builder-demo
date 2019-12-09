@@ -1,12 +1,13 @@
-import Box from "../form/box";
+import Box from "../../form/box";
 import DatePicker from "../../../ui/datePicker";
-import FormBlock from "../form/block";
-import Pattern from "../form/pattern";
+import FormBlock from "../../form/block";
+import Pattern from "../../form/pattern";
 import React from "react";
-import Select from "../form/select";
+import Select from "../../form/select";
 import Space from "../../../ui/space";
-import SplitSection from "../form/splitSection";
-import Submit from "../form/submit";
+import SplitSection from "../../form/splitSection";
+import Footer from "../../form/footer";
+import Button from "../../form/footer/button";
 import TimePicker from "../../../ui/timePicker";
 import locations from "../../config/locations";
 import roles from "../../config/roles";
@@ -68,8 +69,10 @@ export default ({
         setPatternLength
       }}
     />
-    <Submit onClick={create}>
-      Add to roster plan <FontAwesomeIcon icon="long-arrow-alt-right" />
-    </Submit>
+    <Footer>
+      <Button onClick={create}>
+        Add to roster plan <FontAwesomeIcon icon="calendar-plus" />
+      </Button>
+    </Footer>
   </Box>
 );
